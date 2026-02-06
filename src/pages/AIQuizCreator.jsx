@@ -5,9 +5,10 @@ import { useAuth } from '../contexts/AuthContext'
 import { generateQuizWithAI } from '../lib/aiService'
 import Sidebar from '../components/Sidebar'
 import * as pdfjsLib from 'pdfjs-dist'
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.mjs?url'
 
 // Configure PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker
 
 export default function AIQuizCreator() {
     const navigate = useNavigate()

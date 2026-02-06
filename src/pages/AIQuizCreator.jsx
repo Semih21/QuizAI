@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
@@ -15,6 +15,17 @@ export default function AIQuizCreator() {
     const [generating, setGenerating] = useState(false)
     const [generatedQuiz, setGeneratedQuiz] = useState(null)
     const [error, setError] = useState('')
+    const [retryAfter, setRetryAfter] = useState(0)
+
+    useEffect(() => {
+        let interval
+        if (retryAfter > 0) {
+            interval = setInterval(() => {
+                setRetryAfter(prev => prev - 1)
+            }, 1000)
+        }
+        return () => clearInterval(interval)
+    }, [retryAfter])
 
     const handleGenerate = async () => {
         if (!topic.trim()) return
@@ -32,6 +43,9 @@ export default function AIQuizCreator() {
             setGeneratedQuiz(quiz)
         } catch (err) {
             console.error('Error generating quiz:', err)
+            if (err.message.includes('Too many requests')) {
+                setRetryAfter(30) // Wait 30 seconds
+            }
             setError(err.message || 'Failed to generate quiz. Please try again.')
         } finally {
             setGenerating(false)
@@ -211,7 +225,7 @@ export default function AIQuizCreator() {
                                     {/* Generate Button */}
                                     <button
                                         onClick={handleGenerate}
-                                        disabled={!topic.trim() || generating}
+                                        disabled={!topic.trim() || generating || retryAfter > 0}
                                         className="w-full py-4 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 dark:disabled:bg-slate-700 text-white font-bold rounded-lg shadow-lg shadow-blue-500/30 transition-all flex items-center justify-center gap-2"
                                     >
                                         {generating ? (
@@ -219,11 +233,16 @@ export default function AIQuizCreator() {
                                                 <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
                                                 Generating Quiz with AI...
                                             </>
+                                        ) : retryAfter > 0 ? (
+                                            <>
+                                                <span className="material-symbols-outlined">timer</span>
+                                                Retry in {retryAfter}s
+                                            </>
                                         ) : (
                                             <>
                                                 <span className="material-symbols-outlined">auto_awesome</span>
                                                 Generate Quiz with AI
-                                            </>
+                                                传递                                            </>
                                         )}
                                     </button>
                                 </div>

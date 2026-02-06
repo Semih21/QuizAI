@@ -15,6 +15,8 @@ import QuizManagement from '../pages/QuizManagement';
 import PerformanceFeedback from '../pages/PerformanceFeedback';
 import QuizProgress from '../pages/QuizProgress';
 import QuizConfigModal from '../pages/QuizConfigModal';
+import TeacherClasses from '../pages/TeacherClasses';
+import StudentReports from '../pages/StudentReports';
 
 function AppRouter() {
     return (
@@ -93,6 +95,16 @@ function AppRouter() {
                     <Route path="/quiz/create/step-by-step" element={
                         <ProtectedRoute allowedRoles={['teacher']}>
                             <StepByStepCreator />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/teacher/classes" element={
+                        <ProtectedRoute allowedRoles={['teacher']}>
+                            <TeacherClasses />
+                        </ProtectedRoute>
+                    } />
+                    <Route path="/teacher/reports" element={
+                        <ProtectedRoute allowedRoles={['teacher']}>
+                            <StudentReports />
                         </ProtectedRoute>
                     } />
 

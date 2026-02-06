@@ -242,7 +242,7 @@ export default function AIQuizCreator() {
                                             <>
                                                 <span className="material-symbols-outlined">auto_awesome</span>
                                                 Generate Quiz with AI
-                                                传递                                            </>
+                                            </>
                                         )}
                                     </button>
                                 </div>

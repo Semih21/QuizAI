@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Dashboard Overview</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#135bec",
+              "primary-dark": "#0e46b5",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "surface-light": "#ffffff",
+              "surface-dark": "#1a2233",
+            },
+            fontFamily: {
+              "display": ["Lexend", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155; 
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 h-screen overflow-hidden flex">
+<!-- Sidebar Navigation -->
+<aside class="w-64 h-full bg-surface-light dark:bg-surface-dark border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0 transition-colors duration-200">
+<div class="p-6 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-gradient-to-tr from-primary to-cyan-500 flex items-center justify-center text-white shrink-0 shadow-md">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<h1 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">StudyAI</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400">Student Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 flex flex-col gap-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-blue-300 font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>My Quizzes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span>Explore</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+<span>Saved Items</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors mb-2" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<div class="flex items-center gap-3 p-3 mt-2 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700">
+<div class="h-10 w-10 rounded-full bg-cover bg-center shrink-0" data-alt="Portrait of student user" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuACuJrBsNlXDOd15dlQ3EGguHKdm4TOzjDbNB1Ke8DMyB1G57t-dCfqemF3OiNbQmd1ohUsP-PVRDKT0SDt4EN2gJn6kJ9h4Xo-KO_fQfZF9qynZT683FQdoTcIUCEhjfIFp-4C02Wb3nna4tZxAw9W4yMJ_KhbubovUiWxYwAIUVc6d7hDA0jX177Sm-j2QBSmWMK4-noQg326zIrPTbvCVHnrk1lc8p4VllAkG2Wco9GCmcAg-MA8Q4xxRPjB-1_Oh9ItGjM1TWI');"></div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-semibold text-slate-900 dark:text-white truncate">Alex Morgan</span>
+<span class="text-xs text-slate-500 dark:text-slate-400 truncate">Pro Plan</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header Area -->
+<header class="h-16 shrink-0 border-b border-slate-200 dark:border-slate-800 bg-surface-light/80 dark:bg-surface-dark/80 backdrop-blur-md px-8 flex items-center justify-between z-10 sticky top-0">
+<div class="flex items-center gap-4 w-full max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="w-full pl-10 pr-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 border-none focus:ring-2 focus:ring-primary text-sm placeholder-slate-400 dark:text-white transition-all" placeholder="Search for quizzes, topics, or questions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500 border border-white dark:border-surface-dark"></span>
+</button>
+<button class="flex items-center justify-center h-9 px-4 bg-primary hover:bg-primary-dark text-white text-sm font-semibold rounded-lg shadow-sm shadow-primary/30 transition-all gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Create Quiz
+                </button>
+</div>
+</header>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 scroll-smooth">
+<div class="max-w-6xl mx-auto flex flex-col gap-8">
+<!-- Welcome Section -->
+<section class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-1">Welcome back, Alex! 🎓</h2>
+<p class="text-slate-500 dark:text-slate-400">Ready to continue your learning journey today?</p>
+</div>
+<div class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-700 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        Last login: Today, 9:42 AM
+                    </div>
+</section>
+<!-- Stats Cards -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Accuracy Card -->
+<div class="p-6 rounded-2xl bg-white dark:bg-surface-dark border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">target</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-green-600 bg-green-50 dark:bg-green-900/20 dark:text-green-400 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +2.5%
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Average Accuracy</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">82%</h3>
+</div>
+<!-- Quizzes Completed Card -->
+<div class="p-6 rounded-2xl bg-white dark:bg-surface-dark border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400">
+<span class="material-symbols-outlined">library_books</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-green-600 bg-green-50 dark:bg-green-900/20 dark:text-green-400 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] mr-1">add</span> 3 New
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Quizzes Completed</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">14</h3>
+</div>
+<!-- Streak Card -->
+<div class="p-6 rounded-2xl bg-white dark:bg-surface-dark border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined">local_fire_department</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-orange-600 bg-orange-50 dark:bg-orange-900/20 dark:text-orange-400 px-2 py-1 rounded-full">
+                                Keep it up!
+                            </span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Current Streak</p>
+<h3 class="text-3xl font-bold text-slate-900 dark:text-white">5 Days</h3>
+</div>
+</section>
+<!-- Charts & AI Recommendations Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Chart Area (2 cols) -->
+<div class="lg:col-span-2 bg-white dark:bg-surface-dark rounded-2xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Weekly Performance</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Accuracy trends over the last 7 days</p>
+</div>
+<button class="p-1.5 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<div class="relative h-64 w-full">
+<!-- SVG Chart Simulation -->
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 800 300">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#135bec" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#135bec" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Grid Lines -->
+<line class="dark:stroke-slate-700" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="800" y1="225" y2="225"></line>
+<line class="dark:stroke-slate-700" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="800" y1="150" y2="150"></line>
+<line class="dark:stroke-slate-700" stroke="#e2e8f0" stroke-dasharray="4 4" stroke-width="1" x1="0" x2="800" y1="75" y2="75"></line>
+<!-- Area Path -->
+<path d="M0 225 C 100 200, 150 250, 200 180 S 300 100, 400 120 S 500 80, 600 90 S 700 40, 800 60 V 300 H 0 Z" fill="url(#chartGradient)"></path>
+<!-- Line Path -->
+<path d="M0 225 C 100 200, 150 250, 200 180 S 300 100, 400 120 S 500 80, 600 90 S 700 40, 800 60" fill="none" stroke="#135bec" stroke-linecap="round" stroke-width="3"></path>
+<!-- Data Points -->
+<circle cx="200" cy="180" fill="white" r="4" stroke="#135bec" stroke-width="2"></circle>
+<circle cx="400" cy="120" fill="white" r="4" stroke="#135bec" stroke-width="2"></circle>
+<circle cx="600" cy="90" fill="white" r="4" stroke="#135bec" stroke-width="2"></circle>
+<circle cx="800" cy="60" fill="white" r="4" stroke="#135bec" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="flex justify-between mt-4 px-2 text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wide">
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+</div>
+</div>
+<!-- AI Recommendations (1 col) -->
+<div class="lg:col-span-1 flex flex-col gap-4">
+<div class="bg-gradient-to-br from-indigo-600 to-primary rounded-2xl p-6 text-white shadow-lg relative overflow-hidden group">
+<!-- Background Pattern Decorative -->
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl group-hover:bg-white/20 transition-all duration-500"></div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-yellow-300">auto_awesome</span>
+<h3 class="text-base font-bold">Recommended for You</h3>
+</div>
+<p class="text-indigo-100 text-sm mb-4 leading-relaxed">
+                                    Based on your recent History quiz, we noticed you might need a refresher on the <strong>French Revolution</strong>.
+                                </p>
+<div class="bg-white/10 backdrop-blur-sm rounded-xl p-3 mb-4 border border-white/10 hover:bg-white/20 transition-colors cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-white text-primary flex items-center justify-center font-bold text-xs shrink-0">FR</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold truncate">French Revolution: Part 1</p>
+<p class="text-xs text-indigo-200">15 min • Intermediate</p>
+</div>
+<span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+</div>
+</div>
+<button class="w-full py-2 bg-white text-primary text-sm font-bold rounded-lg shadow-sm hover:bg-indigo-50 transition-colors">
+                                    Start Review Quiz
+                                </button>
+</div>
+</div>
+<!-- Secondary Alert/Tip -->
+<div class="bg-white dark:bg-surface-dark border border-slate-100 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex items-start gap-3">
+<div class="text-orange-500 bg-orange-50 dark:bg-orange-900/20 p-2 rounded-lg shrink-0">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+<div>
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-1">Study Tip</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">Try breaking your study sessions into 25-minute intervals for better retention.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Explore Subjects -->
+<section>
+<div class="flex justify-between items-center mb-6 px-1">
+<h3 class="text-xl font-bold text-slate-900 dark:text-white">Explore Subjects</h3>
+<a class="text-sm font-medium text-primary hover:text-primary-dark transition-colors flex items-center gap-1" href="#">
+                            View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Subject Card 1 -->
+<div class="group bg-white dark:bg-surface-dark rounded-xl border border-slate-100 dark:border-slate-800 overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col">
+<div class="h-32 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Abstract geometric shapes representing mathematics" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCel-F85hegh5U0WP2lrcqtNeHfACrBa1OU5Fs7SEabrsPupkShFn9yIv6sSjnQaKovZW3O5pRvGWMTn-aco1PCcDOXYKGJq2gY2vXQRR0hU2YJ9Tn4buJ7ipIh-UCZd21ZJ5cQ4r0kr62YGmw7hGs9N46cwcLtYDLgS-rf9VsEGB1aHgCkeDEegvq7ZWHCucyYLRGdiCFkw5EpcEK7uSJ5IuSXSTpQYyJLdbA6O9QpYOEA8i1bW_t7BUohi7M_epp_LGr6pn5uQo8');"></div>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/60 backdrop-blur-sm p-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-purple-500 text-sm">calculate</span>
+</div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="mb-3">
+<p class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider mb-1">Mathematics</p>
+<h4 class="text-base font-bold text-slate-900 dark:text-white mb-1">Advanced Algebra</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">Master quadratic equations, polynomials, and complex numbers.</p>
+</div>
+<div class="mt-auto pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<span class="text-xs text-slate-400 font-medium">12 Quizzes</span>
+<button class="text-xs font-bold text-primary hover:underline">Start Now</button>
+</div>
+</div>
+</div>
+<!-- Subject Card 2 -->
+<div class="group bg-white dark:bg-surface-dark rounded-xl border border-slate-100 dark:border-slate-800 overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col">
+<div class="h-32 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Chemistry laboratory equipment" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZw3EB-P9klKyjQLWV8M3XicjgKuAWR5acCW6MRteRbCs1nZX30i7I8hMkmrp4qY61VDg9DZCcTxwPIcDu9pF6VSBjxIcZNsnNJiBnBJVCyuNrIRydXCGwRbCUB5SYv75n9XNROq9C2Ya2pnjxFzh6gdEGmEd8sv4XIjEn-LF31lsomfjvqzfH_Vzp5giSRdLz8EwWJUsj9eLoxjfuUqEYp9oNVvYujcGsIwvmgRs6AH6cGvjjSHkT8pO9a_xiqmOrkBLkFeuGIWM');"></div>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/60 backdrop-blur-sm p-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-teal-500 text-sm">science</span>
+</div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="mb-3">
+<p class="text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider mb-1">Science</p>
+<h4 class="text-base font-bold text-slate-900 dark:text-white mb-1">Physics 101</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">Understand the fundamental laws of motion and energy.</p>
+</div>
+<div class="mt-auto pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<span class="text-xs text-slate-400 font-medium">8 Quizzes</span>
+<button class="text-xs font-bold text-primary hover:underline">Start Now</button>
+</div>
+</div>
+</div>
+<!-- Subject Card 3 -->
+<div class="group bg-white dark:bg-surface-dark rounded-xl border border-slate-100 dark:border-slate-800 overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col">
+<div class="h-32 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Old historical book open on a table" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBREaIrCCzLOFQvpEI20nDyvTKZRLO47Vk48Q5IFvbyKMxFoBjJkt6GE7pfKjT3nkQHtpB7rTltKZxHIa94BOxSJUJspOemNJT2Z7PGsE-D1Ym_Y-jv8Gz7AecrDol-Ek8vmvCrw762SZfurmsvh0e9YqteiexbSgrYdrsFFnC5I2lsQs7jGFpz8HDIWV6MlY_smIiYheIdBk02tVYY5lC_GCUUCwe_83tyYDoPCsqHIqj1FLAQKzhKdYC5WWE0HpG5beuOG2jblK0');"></div>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/60 backdrop-blur-sm p-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-amber-600 text-sm">history_edu</span>
+</div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="mb-3">
+<p class="text-xs font-bold text-amber-700 dark:text-amber-500 uppercase tracking-wider mb-1">History</p>
+<h4 class="text-base font-bold text-slate-900 dark:text-white mb-1">European History</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">Explore the major events that shaped modern Europe.</p>
+</div>
+<div class="mt-auto pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<span class="text-xs text-slate-400 font-medium">15 Quizzes</span>
+<button class="text-xs font-bold text-primary hover:underline">Start Now</button>
+</div>
+</div>
+</div>
+<!-- Subject Card 4 -->
+<div class="group bg-white dark:bg-surface-dark rounded-xl border border-slate-100 dark:border-slate-800 overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col">
+<div class="h-32 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Stack of literature books" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA9QsQFcPnuY07HcUR5JSj0x2mMXclz48MmNeGqB3lJvtBHmuGfhV5YIaMUPK_tNUubT5vAh4QiEhyyZPQP7lEymmb_JUju-4fiJlJMJ_vieWnUcj1pCV8u_5ykUvsYiiuXpBvmi-p3oytJLpoerCxqaSu8vwbFa26mokFinqeSfF9apNl_4OYzPXqH-QgyBs7dPPkOFUHHnY0zXBWbwBdqCe9Xlbk8IvNfo-EeZTNxGPS_tzEAqBr2X2Ds0QwPmZmpG4Z3V-XMCAc');"></div>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/60 backdrop-blur-sm p-1.5 rounded-lg shadow-sm">
+<span class="material-symbols-outlined text-rose-500 text-sm">menu_book</span>
+</div>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<div class="mb-3">
+<p class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider mb-1">Literature</p>
+<h4 class="text-base font-bold text-slate-900 dark:text-white mb-1">Classic Novels</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">Dive into the works of Shakespeare, Austen, and more.</p>
+</div>
+<div class="mt-auto pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<span class="text-xs text-slate-400 font-medium">10 Quizzes</span>
+<button class="text-xs font-bold text-primary hover:underline">Start Now</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer class="mt-8 text-center text-xs text-slate-400 pb-4">
+<p>© 2024 StudyAI. All rights reserved.</p>
+</footer>
+</div>
+</div>
+</main>
+<!-- Overlay for mobile menu (hidden on desktop) -->
+<div class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden"></div>
+</body></html>

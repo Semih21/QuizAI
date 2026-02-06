@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Teacher Management Portal</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                        "border-light": "#e2e8f0",
+                        "border-dark": "#334155",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Side Navigation -->
+<aside class="hidden lg:flex flex-col w-72 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex-shrink-0 transition-colors duration-200">
+<div class="flex items-center gap-3 px-6 py-6">
+<div class="bg-primary/10 flex items-center justify-center rounded-xl size-10 text-primary">
+<span class="material-symbols-outlined text-2xl">school</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-tight">EduPortal</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal">Teacher Mode</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto px-4 py-2 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary group transition-all" href="#">
+<span class="material-symbols-outlined fill-1">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-sm font-medium">My Classes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">library_books</span>
+<span class="text-sm font-medium">Quiz Library</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-medium">Student Reports</span>
+</a>
+<div class="my-2 border-t border-border-light dark:border-border-dark"></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 border-2 border-white dark:border-slate-700 shadow-sm" data-alt="Portrait of Mr. Anderson the teacher" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyce4-4aK5-lz_KN6Od88QsVt0PXAPe2Qpld7LDuE6YOqFRBzOqS0nar5mbkuSqvM-1bfJ_yMgLkt7QRzDQLYTTZx9gxjuZGPsMo4LyBXejk3gn4x-INejRoQ1lTqklg6vn5VYhJ0OemxOwpFyztL9NOsYbu01UWE7ncq_u98Q4PWmmVWax91_h3xQBHEiqzhmBTz2FJHzMik1bekr1Gr3tpWunzaXeRB9RUbrFTzeNdw8FbP-0KB20N39Cm91IiLslk-R8x8J0vg");'></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-slate-900 dark:text-white text-sm font-semibold truncate">Mr. Anderson</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs truncate">math.dept@edu.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header -->
+<header class="h-16 flex items-center justify-between px-8 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark shrink-0">
+<div class="flex items-center gap-4 lg:hidden">
+<button class="p-2 -ml-2 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">EduPortal</h2>
+</div>
+<div class="hidden lg:flex items-center gap-2 text-slate-500 dark:text-slate-400">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Teacher Dashboard</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 material-symbols-outlined text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 w-64 bg-background-light dark:bg-slate-800 border-none rounded-lg text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/50 placeholder-slate-400" placeholder="Search..." type="text"/>
+</div>
+<button class="relative p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-800"></span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-6 md:p-8 scroll-smooth">
+<div class="max-w-6xl mx-auto flex flex-col gap-8">
+<!-- Welcome Section -->
+<div class="flex flex-col gap-1">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Good Morning, Mr. Anderson</h2>
+<p class="text-slate-500 dark:text-slate-400">Here's what's happening in your classes today.</p>
+</div>
+<!-- Key Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-lg">
+<span class="material-symbols-outlined">quiz</span>
+</div>
+<span class="flex items-center gap-1 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                                    +2%
+                                </span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Active Quizzes</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">24</p>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="p-2 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-lg">
+<span class="material-symbols-outlined">school</span>
+</div>
+<span class="flex items-center gap-1 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                                    +12
+                                </span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Students</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">142</p>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-xl border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="p-2 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-lg">
+<span class="material-symbols-outlined">monitoring</span>
+</div>
+<span class="flex items-center gap-1 text-sm font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                                    +4%
+                                </span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Avg. Class Score</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">78%</p>
+</div>
+</div>
+</div>
+<!-- AI Quiz Generator Hero Section -->
+<div class="bg-white dark:bg-surface-dark rounded-2xl border border-primary/20 shadow-lg overflow-hidden relative group">
+<!-- Decorative gradient background -->
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent pointer-events-none"></div>
+<div class="p-6 md:p-8 relative z-10">
+<div class="flex flex-col md:flex-row gap-8 items-start">
+<div class="flex-1 space-y-4">
+<div class="flex items-center gap-2 text-primary font-semibold">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span>AI Assessment Creator</span>
+</div>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white">Create your next quiz in seconds</h3>
+<p class="text-slate-600 dark:text-slate-300 leading-relaxed max-w-lg">
+                                        Upload your course materials (PDF, DOCX) or paste a topic. Our AI will analyze the content and generate a comprehensive quiz tailored to your students' level.
+                                    </p>
+<div class="pt-2">
+<button class="bg-primary hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all flex items-center gap-2 group-hover:scale-[1.02]">
+<span class="material-symbols-outlined">generating_tokens</span>
+                                            Generate AI Quiz
+                                        </button>
+</div>
+</div>
+<div class="w-full md:w-[400px] flex-shrink-0">
+<label class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-primary/30 rounded-xl cursor-pointer bg-slate-50 dark:bg-slate-800/50 hover:bg-primary/5 dark:hover:bg-slate-800 transition-colors">
+<div class="flex flex-col items-center justify-center pt-5 pb-6">
+<div class="p-3 bg-white dark:bg-slate-700 rounded-full shadow-sm mb-3 text-primary">
+<span class="material-symbols-outlined text-3xl">cloud_upload</span>
+</div>
+<p class="mb-1 text-sm text-slate-700 dark:text-slate-300 font-medium">Click to upload or drag and drop</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">PDF, DOCX, or TXT (MAX. 10MB)</p>
+</div>
+<input class="hidden" type="file"/>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Split Section: Analytics & Activity -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Performance Chart (Mocked with CSS) -->
+<div class="lg:col-span-2 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-6 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Class Performance Overview</h3>
+<select class="bg-background-light dark:bg-slate-800 border-none text-sm rounded-lg py-1 px-3 text-slate-700 dark:text-slate-300 focus:ring-1 focus:ring-primary">
+<option>This Semester</option>
+<option>Last Month</option>
+</select>
+</div>
+<div class="h-64 flex items-end justify-between gap-2 sm:gap-4 px-2">
+<!-- Chart Bar 1 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="relative w-full bg-primary/10 rounded-t-lg overflow-hidden h-48 flex items-end">
+<div class="w-full bg-primary rounded-t-lg transition-all duration-500 group-hover:bg-primary/80" style="height: 78%;"></div>
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">78%</div>
+</div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Math</p>
+</div>
+<!-- Chart Bar 2 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="relative w-full bg-primary/10 rounded-t-lg overflow-hidden h-48 flex items-end">
+<div class="w-full bg-purple-500 rounded-t-lg transition-all duration-500 group-hover:bg-purple-600" style="height: 85%;"></div>
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">85%</div>
+</div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Science</p>
+</div>
+<!-- Chart Bar 3 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="relative w-full bg-primary/10 rounded-t-lg overflow-hidden h-48 flex items-end">
+<div class="w-full bg-orange-400 rounded-t-lg transition-all duration-500 group-hover:bg-orange-500" style="height: 62%;"></div>
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">62%</div>
+</div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">History</p>
+</div>
+<!-- Chart Bar 4 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="relative w-full bg-primary/10 rounded-t-lg overflow-hidden h-48 flex items-end">
+<div class="w-full bg-emerald-500 rounded-t-lg transition-all duration-500 group-hover:bg-emerald-600" style="height: 92%;"></div>
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">92%</div>
+</div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">English</p>
+</div>
+<!-- Chart Bar 5 -->
+<div class="flex flex-col items-center gap-2 w-full group cursor-pointer">
+<div class="relative w-full bg-primary/10 rounded-t-lg overflow-hidden h-48 flex items-end">
+<div class="w-full bg-pink-500 rounded-t-lg transition-all duration-500 group-hover:bg-pink-600" style="height: 70%;"></div>
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">70%</div>
+</div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Art</p>
+</div>
+</div>
+</div>
+<!-- Recent Activity Feed -->
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-6 shadow-sm flex flex-col h-full">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Recent Student Activity</h3>
+<button class="text-primary text-sm font-semibold hover:underline">View All</button>
+</div>
+<div class="flex flex-col gap-4 overflow-y-auto pr-2 max-h-[300px] lg:max-h-none">
+<!-- Activity Item 1 -->
+<div class="flex gap-3 items-start pb-4 border-b border-border-light dark:border-border-dark last:border-0 last:pb-0">
+<div class="relative flex-shrink-0">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 bg-slate-200" data-alt="Student Sarah Miller" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA10xkRLhMoR1lWYki8zESNVoBm0r_F5JL4ir3OTaE7fd0DAeWS0Gos48ud2NpFvSuhRDJV-b_8sgdxwQN_WtFZJOYnIGtRe0MFbBoU7Qmn2ZHfvCk75vjuG0AlJeQxSDGwYSWSo_dQupvl_IF083FXMw_uejD8klNFBFA1bk7cNt_p4-Hn3du3hoEbxxdCrpEZnJZ1WZDay4eCUy8Um2tyDudzeVnxfVaPqg9TBnkpQkhJVH5V80k8bzlUjvYQmEsv03psPam3Ohc");'></div>
+<div class="absolute bottom-0 right-0 bg-green-500 size-3 border-2 border-white dark:border-slate-800 rounded-full"></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Sarah Miller</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Completed <span class="text-slate-700 dark:text-slate-300 font-medium">Algebra Basics Quiz</span></p>
+</div>
+<div class="text-right">
+<span class="inline-block px-2 py-0.5 rounded text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">92%</span>
+<p class="text-[10px] text-slate-400 mt-1">2m ago</p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-3 items-start pb-4 border-b border-border-light dark:border-border-dark last:border-0 last:pb-0">
+<div class="relative flex-shrink-0">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 bg-slate-200" data-alt="Student John Doe" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAmrWYOclS1zOM9uWUXdg6q4umb0c4yNyj-TQRhLbu5ilVjIb2xl4QhNol4y7zaYyI7yBS6Od6vQW0mjUX5LlJNIlVxnRUVivYY__eXWHYOGGITayE7MHthKSGCE25QFl6Q35WwO6RGX4IPgye8zVX1o0xo4U7TZTaB3deHuz5n-cGZZ7o3_cIUti1dZcc0Uv9PJMcaeU62hBZ-1v2p_nSWtMZrGtDSnUpVEF9x4NdalZhVGE4voTveEgDL7wMk6lbxa8s8izx5yHU");'></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">John Doe</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Started <span class="text-slate-700 dark:text-slate-300 font-medium">World War II History</span></p>
+</div>
+<div class="text-right">
+<span class="inline-block px-2 py-0.5 rounded text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">In Progress</span>
+<p class="text-[10px] text-slate-400 mt-1">15m ago</p>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-3 items-start pb-4 border-b border-border-light dark:border-border-dark last:border-0 last:pb-0">
+<div class="relative flex-shrink-0">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 bg-slate-200" data-alt="Student Emily Chen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDwmM7pZrwo61k7Wm3JgqnV-NQWoN7iBnfZTFNdbYFrD6mTZtAjcUsb6pTSAaa3noB9yYagSrXOTpn3uST2vRM4ABVYthbGf58LZ4Lp983k1JqbCkB4sfg8-nERPgvyDCjwGV982zBja0NUGUpUZiVHcdTlt1aoA15Pp8xuUv7_iJxpRdQvTDnqjBtr313Ivc2RaRa7rWGQGeVuwupHznAKfqJ9i_dXTP0hrjWFSlJhljtDeuc6TqCaKIRjfNWexDtBUl1hOV000q4");'></div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Emily Chen</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Completed <span class="text-slate-700 dark:text-slate-300 font-medium">Chemical Bonds</span></p>
+</div>
+<div class="text-right">
+<span class="inline-block px-2 py-0.5 rounded text-xs font-bold bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400">76%</span>
+<p class="text-[10px] text-slate-400 mt-1">1h ago</p>
+</div>
+</div>
+<!-- Activity Item 4 -->
+<div class="flex gap-3 items-start pb-4 border-b border-border-light dark:border-border-dark last:border-0 last:pb-0">
+<div class="relative flex-shrink-0">
+<div class="flex items-center justify-center rounded-full size-10 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-xs font-bold">
+                                            MJ
+                                        </div>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-slate-900 dark:text-white truncate">Michael Jordan</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Retook <span class="text-slate-700 dark:text-slate-300 font-medium">Physics Intro</span></p>
+</div>
+<div class="text-right">
+<span class="inline-block px-2 py-0.5 rounded text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">88%</span>
+<p class="text-[10px] text-slate-400 mt-1">3h ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Info -->
+<div class="flex justify-center py-6">
+<p class="text-xs text-slate-400 dark:text-slate-500">© 2023 EduPortal AI. All rights reserved.</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

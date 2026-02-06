@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manual Quiz Editor Interface</title>
+<!-- Fonts: Lexend and Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1111d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        
+        /* Slider Thumb Styling */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #1111d4;
+            cursor: pointer;
+            margin-top: -8px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+            box-shadow: 0 0 0 4px rgba(17, 17, 212, 0.1);
+        }
+        input[type=range]::-moz-range-thumb {
+            height: 20px;
+            width: 20px;
+            border: none;
+            border-radius: 50%;
+            background: #1111d4;
+            cursor: pointer;
+            box-shadow: 0 0 0 4px rgba(17, 17, 212, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111118] dark:text-white overflow-hidden h-screen flex flex-col">
+<!-- Global Header -->
+<header class="flex-none bg-white dark:bg-gray-900 border-b border-[#f0f0f4] dark:border-gray-800 z-20">
+<!-- Top Navigation Row -->
+<div class="px-6 py-3 flex justify-between items-center border-b border-[#f0f0f4] dark:border-gray-800">
+<div class="flex items-center gap-2 text-gray-500 hover:text-primary cursor-pointer transition-colors group">
+<span class="material-symbols-outlined text-[20px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+<span class="text-sm font-medium">Back to Dashboard</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">help</span>
+<span class="text-sm font-medium text-gray-500">Help</span>
+</div>
+<div class="h-4 w-px bg-gray-200 dark:bg-gray-700"></div>
+<div class="flex items-center gap-3">
+<span class="text-sm font-semibold text-[#111118] dark:text-gray-200">Prof. Albus</span>
+<div class="h-8 w-8 rounded-full bg-gray-200 bg-cover bg-center ring-2 ring-white dark:ring-gray-800 shadow-sm" data-alt="User profile avatar image" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuByV-7tvH1zjd8hh2PltHboU7ljc8wdfU81vHjaEW3Pco7JtwiwoVhuQJJ8ZSZwPD26ZSy5L86tFCJjugkm-MwOhhfwJI8N91brleZ2dr-qxET609N15dPVroXQQQTqDIt8Knvz5XTPfO3ncb9FI35E2NSzldwewFEEWy_WwQxAs_WJPf9dL8NzU4z6n44z8CPdb_Y9oAc3QZaGWUAUaDjeD-HWqewiiXYIhAzNzt9sBu8CY1zPMmgKe2fs2SxrG7Buz42YlpsjW9U');"></div>
+</div>
+</div>
+</div>
+<!-- Quiz Metadata Row -->
+<div class="px-6 py-4 flex flex-wrap items-end gap-8 bg-white dark:bg-gray-900">
+<!-- Quiz Title -->
+<div class="flex-1 min-w-[280px]">
+<label class="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">Quiz Title</label>
+<input class="w-full text-2xl font-bold bg-transparent border-none border-b-2 border-transparent hover:border-gray-100 focus:border-primary focus:ring-0 px-0 py-1 transition-all placeholder-gray-300 text-[#111118] dark:text-white leading-tight" placeholder="Enter quiz title..." type="text" value="Mid-Term Assessment: Linear Equations"/>
+</div>
+<!-- Subject Tag -->
+<div class="w-48">
+<label class="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">Subject</label>
+<div class="relative">
+<select class="w-full appearance-none bg-background-light dark:bg-gray-800 border-none rounded-lg pl-3 pr-10 py-2.5 text-sm font-semibold text-[#111118] dark:text-gray-200 focus:ring-2 focus:ring-primary cursor-pointer">
+<option>Mathematics</option>
+<option>Physics</option>
+<option>Chemistry</option>
+<option>History</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-[20px]">expand_more</span>
+</div>
+</div>
+<!-- Topic Tag -->
+<div class="w-48">
+<label class="block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">Topic</label>
+<div class="relative group/topic">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-primary pointer-events-none text-[18px]">tag</span>
+<input class="w-full bg-background-light dark:bg-gray-800 border-none rounded-lg pl-9 pr-3 py-2.5 text-sm font-semibold text-[#111118] dark:text-gray-200 focus:ring-2 focus:ring-primary placeholder-gray-400" type="text" value="Algebra II"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Workspace (Split View) -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Left Sidebar: Question Navigator -->
+<aside class="w-[340px] flex flex-col bg-white dark:bg-gray-900 border-r border-[#f0f0f4] dark:border-gray-800 z-10 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.05)]">
+<div class="px-5 py-4 border-b border-[#f0f0f4] dark:border-gray-800 flex justify-between items-center bg-white dark:bg-gray-900">
+<h3 class="font-bold text-[#111118] dark:text-white">Questions</h3>
+<span class="text-[10px] uppercase font-bold tracking-wider bg-background-light dark:bg-gray-800 px-2 py-1 rounded text-gray-500">Total: 4</span>
+</div>
+<div class="flex-1 overflow-y-auto p-3 space-y-2 bg-[#fcfcfd] dark:bg-[#0b0b18]">
+<!-- Active Question Item -->
+<div class="group flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-gray-800 ring-1 ring-primary/20 shadow-md relative overflow-hidden cursor-pointer">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="mt-1 text-gray-400 cursor-move hover:text-primary"><span class="material-symbols-outlined text-[20px]">drag_indicator</span></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-primary">Question 1</span>
+<span class="text-[10px] font-bold text-white bg-primary px-1.5 py-0.5 rounded">MC</span>
+</div>
+<p class="text-sm text-[#111118] dark:text-white line-clamp-2 font-medium leading-snug">If 2x + 4 = 12, what is the value of x?</p>
+</div>
+</div>
+<!-- Inactive Question Item -->
+<div class="group flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-gray-900 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 shadow-sm cursor-pointer transition-all hover:shadow-md">
+<div class="mt-1 text-gray-300 cursor-move group-hover:text-gray-500"><span class="material-symbols-outlined text-[20px]">drag_indicator</span></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-gray-400">Question 2</span>
+<span class="text-[10px] font-bold text-gray-500 bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">TF</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-snug">The Pythagorean theorem applies only to right-angled triangles.</p>
+</div>
+</div>
+<!-- Inactive Question Item -->
+<div class="group flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-gray-900 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 shadow-sm cursor-pointer transition-all hover:shadow-md">
+<div class="mt-1 text-gray-300 cursor-move group-hover:text-gray-500"><span class="material-symbols-outlined text-[20px]">drag_indicator</span></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-gray-400">Question 3</span>
+<span class="text-[10px] font-bold text-gray-500 bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">FITB</span>
+</div>
+<p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-snug">Wait ______ me at the station.</p>
+</div>
+</div>
+<!-- Warning Item (Incomplete) -->
+<div class="group flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-gray-900 border border-red-100 hover:border-red-200 shadow-sm cursor-pointer transition-all">
+<div class="mt-1 text-gray-300 cursor-move group-hover:text-gray-500"><span class="material-symbols-outlined text-[20px]">drag_indicator</span></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-bold text-red-500 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">error</span> Question 4</span>
+<span class="text-[10px] font-bold text-gray-500 bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded">MC</span>
+</div>
+<p class="text-sm text-gray-400 italic">No question text...</p>
+</div>
+</div>
+</div>
+<!-- Sidebar Footer Action -->
+<div class="p-4 border-t border-[#f0f0f4] dark:border-gray-800 bg-white dark:bg-gray-900">
+<button class="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-dashed border-gray-300 text-gray-600 dark:text-gray-300 font-bold text-sm hover:border-primary hover:text-primary hover:bg-primary/5 transition-all group">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform">add</span>
+                    Add New Question
+                </button>
+</div>
+</aside>
+<!-- Center Canvas: Main Editor -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark relative">
+<div class="max-w-[800px] mx-auto py-10 px-6 pb-32">
+<!-- Main Editor Card -->
+<div class="bg-white dark:bg-gray-900 rounded-xl shadow-[0_2px_12px_-2px_rgba(0,0,0,0.08)] border border-[#f0f0f4] dark:border-gray-800 overflow-hidden">
+<!-- Card Top Bar: Question Type & Number -->
+<div class="px-8 py-6 border-b border-[#f0f0f4] dark:border-gray-800 flex flex-col md:flex-row md:justify-between md:items-center gap-4 bg-gray-50/50 dark:bg-gray-800/50">
+<div class="flex items-center gap-4">
+<span class="flex items-center justify-center w-10 h-10 rounded-lg bg-primary text-white font-bold text-lg shadow-lg shadow-primary/30">1</span>
+<div>
+<h2 class="text-lg font-bold text-[#111118] dark:text-white leading-tight">Question Content</h2>
+<p class="text-xs text-gray-500 font-medium">Configure the question stem and correct answers.</p>
+</div>
+</div>
+<div class="relative min-w-[200px]">
+<label class="absolute -top-2 left-2 bg-white dark:bg-gray-800 px-1 text-[10px] font-bold text-gray-500 uppercase tracking-wider z-10">Question Type</label>
+<select class="w-full appearance-none pl-4 pr-10 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-sm font-bold text-[#111118] dark:text-white focus:ring-2 focus:ring-primary focus:border-primary cursor-pointer transition-shadow">
+<option value="mc">Multiple Choice</option>
+<option value="tf">True / False</option>
+<option value="fitb">Fill in the Blanks</option>
+<option value="match">Matching</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none text-[20px]">expand_more</span>
+</div>
+</div>
+<div class="p-8">
+<!-- Question Stem Input -->
+<div class="mb-10 group">
+<div class="flex justify-between items-center mb-2">
+<label class="text-sm font-bold text-[#111118] dark:text-white">Question Text</label>
+<div class="flex gap-1">
+<button class="p-1.5 rounded hover:bg-gray-100 text-gray-400 hover:text-primary transition-colors" title="Bold">
+<span class="material-symbols-outlined text-[18px]">format_bold</span>
+</button>
+<button class="p-1.5 rounded hover:bg-gray-100 text-gray-400 hover:text-primary transition-colors" title="Italic">
+<span class="material-symbols-outlined text-[18px]">format_italic</span>
+</button>
+<button class="p-1.5 rounded hover:bg-gray-100 text-gray-400 hover:text-primary transition-colors" title="Insert Image">
+<span class="material-symbols-outlined text-[18px]">image</span>
+</button>
+</div>
+</div>
+<textarea class="w-full p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-[#111118] dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-primary focus:border-primary resize-y min-h-[120px] text-base leading-relaxed transition-shadow" placeholder="Type your question here..." rows="4">If 2x + 4 = 12, what is the value of x?</textarea>
+</div>
+<!-- Answer Key Area -->
+<div class="mb-10">
+<div class="flex justify-between items-center mb-5">
+<label class="text-sm font-bold text-[#111118] dark:text-white flex items-center gap-2">
+                                    Answer Key
+                                    <span class="text-[10px] font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">Select the correct option</span>
+</label>
+<button class="group flex items-center gap-1.5 text-xs font-bold text-primary border border-primary/20 hover:bg-primary/5 px-3 py-1.5 rounded-lg transition-all">
+<span class="material-symbols-outlined text-[16px] group-hover:scale-110 transition-transform">smart_toy</span>
+                                    AI Generate Distractors
+                                </button>
+</div>
+<div class="space-y-4">
+<!-- Option A -->
+<div class="flex items-center gap-4 group animate-[fadeIn_0.3s_ease-out]">
+<div class="pt-1">
+<input class="w-5 h-5 text-primary border-gray-300 focus:ring-primary focus:ring-offset-2 cursor-pointer transition-all" name="correct_answer" type="radio"/>
+</div>
+<div class="flex-1 relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-sm select-none">A</span>
+<input class="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:border-primary text-[#111118] dark:text-white transition-shadow" type="text" value="2"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-300 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Option B (Correct) -->
+<div class="flex items-center gap-4 group">
+<div class="pt-1">
+<input checked="" class="w-5 h-5 text-primary border-gray-300 focus:ring-primary focus:ring-offset-2 cursor-pointer transition-all" name="correct_answer" type="radio"/>
+</div>
+<div class="flex-1 relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-primary font-bold text-sm select-none">B</span>
+<input class="w-full pl-10 pr-24 py-3 rounded-lg border border-primary ring-1 ring-primary/20 bg-primary/5 text-[#111118] dark:text-white font-semibold transition-shadow" type="text" value="4"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 select-none">
+<span class="text-[10px] font-bold text-primary bg-white dark:bg-gray-800 px-2 py-0.5 rounded shadow-sm border border-primary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check</span> Correct
+                                            </span>
+</div>
+</div>
+</div>
+<!-- Option C -->
+<div class="flex items-center gap-4 group">
+<div class="pt-1">
+<input class="w-5 h-5 text-primary border-gray-300 focus:ring-primary focus:ring-offset-2 cursor-pointer transition-all" name="correct_answer" type="radio"/>
+</div>
+<div class="flex-1 relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-sm select-none">C</span>
+<input class="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:border-primary text-[#111118] dark:text-white transition-shadow" type="text" value="6"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-300 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Option D -->
+<div class="flex items-center gap-4 group">
+<div class="pt-1">
+<input class="w-5 h-5 text-primary border-gray-300 focus:ring-primary focus:ring-offset-2 cursor-pointer transition-all" name="correct_answer" type="radio"/>
+</div>
+<div class="flex-1 relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-sm select-none">D</span>
+<input class="w-full pl-10 pr-10 py-3 rounded-lg border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary focus:border-primary text-[#111118] dark:text-white transition-shadow" type="text" value="8"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-300 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Add Option Button -->
+<div class="pl-9 pt-2">
+<button class="text-sm font-bold text-gray-500 hover:text-primary flex items-center gap-2 transition-colors py-2 px-1 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+<div class="bg-gray-200 dark:bg-gray-700 rounded-full p-0.5"><span class="material-symbols-outlined text-[16px] block">add</span></div>
+                                        Add another option
+                                    </button>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px bg-gray-100 dark:bg-gray-800 my-8 w-full"></div>
+<!-- Settings: Difficulty & Points -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+<!-- Difficulty Slider -->
+<div class="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
+<div class="flex justify-between items-end mb-4">
+<label class="text-sm font-bold text-[#111118] dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-400 text-[18px]">signal_cellular_alt</span>
+                                        Difficulty
+                                    </label>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded">Medium (3/5)</span>
+</div>
+<div class="px-2">
+<input class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary" max="5" min="1" type="range" value="3"/>
+<div class="flex justify-between mt-2">
+<span class="text-[10px] font-bold uppercase text-gray-400">Easy</span>
+<span class="text-[10px] font-bold uppercase text-gray-400">Hard</span>
+</div>
+</div>
+</div>
+<!-- Points Input -->
+<div class="bg-gray-50 dark:bg-gray-800/50 p-5 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
+<label class="text-sm font-bold text-[#111118] dark:text-white mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-400 text-[18px]">stars</span>
+                                    Point Value
+                                </label>
+<div class="relative w-full">
+<input class="w-full pl-4 pr-12 py-2.5 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-2 focus:ring-primary focus:border-primary font-bold text-[#111118] dark:text-white transition-shadow" type="number" value="10"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs font-bold uppercase">pts</span>
+</div>
+</div>
+</div>
+</div>
+</div> <!-- End Card -->
+</div>
+</main>
+</div>
+<!-- Sticky Footer -->
+<footer class="flex-none bg-white dark:bg-gray-900 border-t border-[#f0f0f4] dark:border-gray-800 px-6 py-4 z-30 shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)]">
+<div class="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex items-center gap-2 text-sm text-gray-500 font-medium animate-pulse">
+<span class="material-symbols-outlined text-[16px]">cloud_done</span>
+                 All changes saved
+             </div>
+<div class="flex gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-white border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 text-[#111118] dark:text-white text-sm font-bold transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+                     Preview
+                 </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-8 py-2.5 rounded-xl bg-primary hover:bg-blue-700 active:scale-95 text-white text-sm font-bold shadow-lg shadow-blue-500/30 transition-all">
+<span class="material-symbols-outlined text-[20px]">publish</span>
+                     Save &amp; Publish
+                 </button>
+</div>
+</div>
+</footer>
+</body></html>

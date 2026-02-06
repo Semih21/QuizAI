@@ -1,8 +1,7 @@
 [build]
-  command = "corepack enable && npm run build"
+  command = "corepack enable && pnpm install && pnpm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
-  NPM_VERSION = "10.9.0"
   CI = "true"

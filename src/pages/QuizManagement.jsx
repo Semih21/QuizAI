@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import Sidebar from '../components/Sidebar'
@@ -8,32 +8,61 @@ import QuizCard from '../components/QuizCard'
 
 export default function QuizManagement() {
     const { user } = useAuth()
+    const [searchParams] = useSearchParams()
+    const initialSubject = searchParams.get('subject')
+
     const [quizzes, setQuizzes] = useState([])
     const [subjects, setSubjects] = useState([])
-    const [selectedSubjects, setSelectedSubjects] = useState([])
+    const [selectedSubjects, setSelectedSubjects] = useState(initialSubject ? [initialSubject] : [])
     const [statusFilter, setStatusFilter] = useState('all')
     const [loading, setLoading] = useState(true)
     const [quizHistory, setQuizHistory] = useState([])
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchInitialData() {
             try {
-                const [quizzesRes, subjectsRes, historyRes] = await Promise.all([
-                    supabase.from('quizzes').select('*, subjects(name)').eq('is_published', true).limit(6),
+                const [subjectsRes, historyRes] = await Promise.all([
                     supabase.from('subjects').select('*'),
-                    supabase.from('quiz_attempts').select('*, quizzes(title, subjects(name))').eq('student_id', user?.id).eq('status', 'completed').order('completed_at', { ascending: false }).limit(5)
+                    supabase.from('quiz_attempts')
+                        .select('*, quizzes(title, subjects(name))')
+                        .eq('student_id', user?.id)
+                        .eq('status', 'completed')
+                        .order('completed_at', { ascending: false })
+                        .limit(5)
                 ])
-                setQuizzes(quizzesRes.data || [])
                 setSubjects(subjectsRes.data || [])
                 setQuizHistory(historyRes.data || [])
             } catch (error) {
-                console.error('Error fetching data:', error)
+                console.error('Error fetching baseline data:', error)
+            }
+        }
+        if (user) fetchInitialData()
+    }, [user])
+
+    useEffect(() => {
+        async function fetchFilteredQuizzes() {
+            setLoading(true)
+            try {
+                let query = supabase
+                    .from('quizzes')
+                    .select('*, subjects(name)')
+                    .eq('is_published', true)
+
+                if (selectedSubjects.length > 0) {
+                    query = query.in('subject_id', selectedSubjects)
+                }
+
+                const { data, error } = await query.limit(12)
+                if (error) throw error
+                setQuizzes(data || [])
+            } catch (error) {
+                console.error('Error fetching filtered quizzes:', error)
             } finally {
                 setLoading(false)
             }
         }
-        if (user) fetchData()
-    }, [user])
+        if (user) fetchFilteredQuizzes()
+    }, [user, selectedSubjects, statusFilter])
 
     const handleStartQuiz = (quiz) => {
         window.location.href = `/quiz/active/${quiz.id}`
@@ -205,10 +234,10 @@ export default function QuizManagement() {
                                                     <td className="px-6 py-4">
                                                         <div className="flex items-center gap-2">
                                                             <span className={`text-base font-bold ${attempt.percentage >= 80 ? 'text-teal-600' :
-                                                                    attempt.percentage >= 60 ? 'text-amber-600' : 'text-red-600'
+                                                                attempt.percentage >= 60 ? 'text-amber-600' : 'text-red-600'
                                                                 }`}>{attempt.percentage}%</span>
                                                             <span className={`material-symbols-outlined text-sm ${attempt.percentage >= 80 ? 'text-teal-600' :
-                                                                    attempt.percentage >= 60 ? 'text-amber-600' : 'text-red-600'
+                                                                attempt.percentage >= 60 ? 'text-amber-600' : 'text-red-600'
                                                                 }`}>
                                                                 {attempt.percentage >= 80 ? 'trending_up' : attempt.percentage >= 60 ? 'trending_flat' : 'trending_down'}
                                                             </span>

@@ -2,7 +2,7 @@
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 
-export async function generateQuizWithAI({ topic, numQuestions, difficulty, questionType }) {
+export async function generateQuizWithAI({ topic, numQuestions, difficulty, questionType, sourceText }) {
     if (!GEMINI_API_KEY) {
         throw new Error('GEMINI_API_KEY not configured. Please add VITE_GEMINI_API_KEY to your .env file.')
     }
@@ -13,7 +13,7 @@ export async function generateQuizWithAI({ topic, numQuestions, difficulty, ques
         advanced: 'challenging questions for advanced learners'
     }
 
-    const prompt = `Generate exactly ${numQuestions} ${questionType.replace('_', ' ')} quiz questions about "${topic}".
+    const prompt = `${sourceText ? `Based on the following source material:\n\n${sourceText.substring(0, 15000)}\n\n` : ''}Generate exactly ${numQuestions} ${questionType.replace('_', ' ')} quiz questions about "${topic}".
 
 Difficulty level: ${difficulty} (${difficultyDescriptions[difficulty]})
 
@@ -36,7 +36,7 @@ Return ONLY a valid JSON array with this exact structure (no markdown, no code b
 Rules:
 - Each question must have exactly 4 options
 - Exactly one option must be correct (is_correct: true)
-- Make questions educational and accurate about the topic "${topic}"
+- Make questions educational and accurate about the topic or source material
 - order_index should increment from 0
 - Return ONLY the JSON array, no other text`
 

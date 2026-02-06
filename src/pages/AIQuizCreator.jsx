@@ -4,6 +4,10 @@ import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import { generateQuizWithAI } from '../lib/aiService'
 import Sidebar from '../components/Sidebar'
+import * as pdfjsLib from 'pdfjs-dist'
+
+// Configure PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`
 
 export default function AIQuizCreator() {
     const navigate = useNavigate()
@@ -16,6 +20,9 @@ export default function AIQuizCreator() {
     const [generatedQuiz, setGeneratedQuiz] = useState(null)
     const [error, setError] = useState('')
     const [retryAfter, setRetryAfter] = useState(0)
+    const [file, setFile] = useState(null)
+    const [fileContent, setFileContent] = useState('')
+    const [processingFile, setProcessingFile] = useState(false)
 
     useEffect(() => {
         let interval
@@ -28,17 +35,21 @@ export default function AIQuizCreator() {
     }, [retryAfter])
 
     const handleGenerate = async () => {
-        if (!topic.trim()) return
+        if (!topic.trim() && !fileContent) {
+            setError('Please enter a topic or upload a source material.')
+            return
+        }
 
         setGenerating(true)
         setError('')
 
         try {
             const quiz = await generateQuizWithAI({
-                topic: topic.trim(),
+                topic: topic.trim() || file?.name || 'Uploaded Material',
                 numQuestions,
                 difficulty,
-                questionType
+                questionType,
+                sourceText: fileContent
             })
             setGeneratedQuiz(quiz)
         } catch (err) {
@@ -103,6 +114,57 @@ export default function AIQuizCreator() {
         } catch (error) {
             console.error('Error saving quiz:', error)
         }
+    }
+
+    const handleFileChange = async (e) => {
+        const selectedFile = e.target.files[0]
+        if (!selectedFile) return
+
+        setProcessingFile(true)
+        setError('')
+        setFile(selectedFile)
+
+        try {
+            if (selectedFile.type === 'application/pdf') {
+                const text = await extractTextFromPDF(selectedFile)
+                setFileContent(text)
+                if (text.trim().length < 50) {
+                    setError('The PDF seems to have very little text. Please ensure it\'s not just images (scanned PDF).')
+                }
+            } else if (selectedFile.type === 'text/plain') {
+                const text = await selectedFile.text()
+                setFileContent(text)
+            } else {
+                setError('Unsupported file type. Please upload a PDF or TXT file.')
+                setFile(null)
+            }
+        } catch (err) {
+            console.error('Error processing file:', err)
+            setError('Failed to process the file. Please try again.')
+            setFile(null)
+        } finally {
+            setProcessingFile(false)
+        }
+    }
+
+    const extractTextFromPDF = async (file) => {
+        const arrayBuffer = await file.arrayBuffer()
+        const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer })
+        const pdf = await loadingTask.promise
+        let fullText = ''
+
+        for (let i = 1; i <= Math.min(pdf.numPages, 15); i++) {
+            const page = await pdf.getPage(i)
+            const textContent = await page.getTextContent()
+            const pageText = textContent.items.map(item => item.str).join(' ')
+            fullText += pageText + '\n'
+        }
+        return fullText
+    }
+
+    const clearFile = () => {
+        setFile(null)
+        setFileContent('')
     }
 
     return (
@@ -206,13 +268,45 @@ export default function AIQuizCreator() {
                                         <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                                             Or Upload Source Material (Optional)
                                         </label>
-                                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl cursor-pointer bg-slate-50 dark:bg-slate-800/50 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-colors">
-                                            <div className="flex flex-col items-center justify-center">
-                                                <span className="material-symbols-outlined text-3xl text-slate-400 mb-2">cloud_upload</span>
-                                                <p className="text-sm text-slate-500">Click to upload PDF, DOCX, or TXT</p>
+
+                                        {!file ? (
+                                            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl cursor-pointer bg-slate-50 dark:bg-slate-800/50 hover:bg-blue-50/50 dark:hover:bg-slate-800 transition-colors">
+                                                <div className="flex flex-col items-center justify-center">
+                                                    {processingFile ? (
+                                                        <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500 border-t-transparent mb-2"></div>
+                                                    ) : (
+                                                        <span className="material-symbols-outlined text-3xl text-slate-400 mb-2">cloud_upload</span>
+                                                    )}
+                                                    <p className="text-sm text-slate-500">
+                                                        {processingFile ? 'Processing document...' : 'Click to upload PDF, DOCX, or TXT'}
+                                                    </p>
+                                                </div>
+                                                <input
+                                                    type="file"
+                                                    className="hidden"
+                                                    accept=".pdf,.docx,.txt"
+                                                    onChange={handleFileChange}
+                                                    disabled={processingFile}
+                                                />
+                                            </label>
+                                        ) : (
+                                            <div className="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+                                                <div className="flex items-center gap-3 overflow-hidden">
+                                                    <span className="material-symbols-outlined text-blue-600">
+                                                        {file.type === 'application/pdf' ? 'picture_as_pdf' : 'description'}
+                                                    </span>
+                                                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300 truncate">
+                                                        {file.name} ({(file.size / 1024).toFixed(1)} KB)
+                                                    </span>
+                                                </div>
+                                                <button
+                                                    onClick={clearFile}
+                                                    className="p-1 hover:bg-blue-100 dark:hover:bg-blue-900/40 rounded-full text-blue-600 transition-colors"
+                                                >
+                                                    <span className="material-symbols-outlined text-xl">close</span>
+                                                </button>
                                             </div>
-                                            <input type="file" className="hidden" accept=".pdf,.docx,.txt" />
-                                        </label>
+                                        )}
                                     </div>
 
                                     {/* Error Message */}

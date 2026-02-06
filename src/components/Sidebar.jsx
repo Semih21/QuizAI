@@ -10,7 +10,7 @@ const studentNavItems = [
 const teacherNavItems = [
     { path: '/teacher', icon: 'dashboard', label: 'Dashboard' },
     { path: '/teacher/classes', icon: 'groups', label: 'My Classes' },
-    { path: '/quiz/create/ai', icon: 'library_books', label: 'Quiz Library' },
+    { path: '/quiz/create/ai', icon: 'library_books', label: 'Create Quiz' },
     { path: '/teacher/reports', icon: 'analytics', label: 'Student Reports' },
 ]
 

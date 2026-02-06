@@ -21,7 +21,7 @@ export default function TeacherClasses() {
                     .from('classes')
                     .select(`
                         *,
-                        class_members(count)
+                        class_members!class_members_class_id_fkey(count)
                     `)
                     .eq('teacher_id', profile?.id)
 
